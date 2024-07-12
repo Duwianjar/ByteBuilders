@@ -1,0 +1,50 @@
+.container-depository {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    background-color: #fff;
+}
+
+.message {
+    display: block;
+    opacity: 1;
+    animation: hideMessage 1m forwards;
+}
+
+@keyframes hideMessage {
+    0% {
+        opacity: 1;
+    }
+    99.9% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+.edit {
+    cursor: pointer;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.add {
+    cursor: pointer;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.d-hidden {
+    display: none;
+}
+.d-visible {
+    display: block;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+}
+.d-fade {
+    opacity: 0;
+}

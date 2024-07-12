@@ -1,0 +1,40 @@
+
+.circle-image {
+    width: 50px;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.notes {
+    opacity: 0.9;
+    margin-top: 20px;
+    text-align: right;
+}
+
+@media (max-width: 767.6px) {
+    .my-das {
+        margin-left: -30px !important;
+        margin-bottom: -20px !important;
+    }
+    .notes {
+        text-align: left;
+        margin-left: -30px;
+    }
+}
+
+.img-size {
+    height: 2em;
+    width: auto;
+    vertical-align: middle;
+}
+
+.not-mobile {
+    display:none;
+}
+
+@media (max-width: 450px) {
+    .not-mobile {
+        display:block;
+    }
+}

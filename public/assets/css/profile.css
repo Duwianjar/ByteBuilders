@@ -1,0 +1,27 @@
+.container-profile {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    background-color: #fff;
+}
+
+.message {
+    display: block;
+    opacity: 1;
+    animation: hideMessage 1m forwards;
+}
+
+@keyframes hideMessage {
+    0% {
+        opacity: 1;
+    }
+    99.9% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
