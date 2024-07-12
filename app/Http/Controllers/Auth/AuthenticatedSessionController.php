@@ -106,7 +106,7 @@ class AuthenticatedSessionController extends Controller
                 // Simpan perubahan pada objek pengguna
                 $user->save();
 
-                return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
+                return redirect()->back()->with('success-photo', 'Profil berhasil diperbarui.');
             } else {
                 return "Foto tidak valid. Silakan unggah foto yang valid";
             }

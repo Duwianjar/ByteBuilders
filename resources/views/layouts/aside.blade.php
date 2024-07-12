@@ -17,6 +17,14 @@
         @csrf
     </form>
 </h5>
+@if(session('success-photo'))
+<div class="alert alert-success alert-dismissible fade show col-12" role="alert">
+    {{ session('success-photo') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
 <hr>
 <h4 class="text-start">
     Depository
