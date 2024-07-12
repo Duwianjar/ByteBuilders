@@ -7,7 +7,8 @@ Ini adalah proyek MoneyWise, sebuah aplikasi web yang dibangun menggunakan frame
 Berikut langkah-langkah untuk menjalankan aplikasi MoneyWise di lingkungan pengembangan Anda:
 
 1. **Clone Repository**:
-git clone https://github.com/username/repository.git
+git clone https://github.com/Duwianjar/ByteBuilders.git
+1.1. **Atau bisa juga download ZIP**
 
 
 
