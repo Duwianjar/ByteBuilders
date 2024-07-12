@@ -24,7 +24,7 @@
                 <div class="col-lg-4 container-dashboard text-center aside-profile">
                     @include('layouts.aside')
                 </div>
-                
+
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -55,6 +55,35 @@
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                                 </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="editPhotoModal" tabindex="-1" role="dialog" aria-labelledby="editPhotoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content mb-5">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editPhotoModalLabel">Edit Foto Profil</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-center mb-5">
+                                @if (Auth::user()->photo != null)
+                                    <img src="{{ asset(Auth::user()->photo) }}" alt="user" class="img-fluid rounded-circle mb-3" id="currentPhoto" style="width: 250px; height: 250px; object-fit: cover;">
+                                @else
+                                    <img src="{{ asset('assets/img/user.png') }}" alt="user" class="img-fluid rounded-circle mb-3" id="currentPhoto" style="width: 250px; height: 250px; object-fit: cover;">
+                                @endif
+                                <form id="editForm" action="{{ route('users.update.photo', ['id' => Auth::user()->id]) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="form-group">
+                                        <label for="newPhoto">Pilih Foto Baru:</label>
+                                        <input type="file" class="form-control bg-secondary text-white" id="newPhoto" name="newPhoto" accept="image/*">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                </form>
+
+                            </div>
                         </div>
                     </div>
                 </div>

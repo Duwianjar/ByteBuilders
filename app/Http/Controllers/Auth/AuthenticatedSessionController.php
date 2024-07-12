@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
@@ -66,28 +67,56 @@ class AuthenticatedSessionController extends Controller
             return redirect()->back()->with('error', "Failed to delete user.");
         }
     }
-    
-    public function updateByAdmin(Request $request, string $id)
+
+    public function updatephoto(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+        $request->validate([
+            'newPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-    
+
         $user = User::findOrFail($id);
-    
-        $user->name = $validatedData['name'];
-        $user->email = $validatedData['email'];
-    
-        if ($request->filled('password')) {
-            $user->password = Hash::make($validatedData['password']);
+
+        if ($request->hasFile('newPhoto')) {
+            $newPhoto = $request->file('newPhoto');
+
+            // Pengecekan apakah file foto ada
+            if ($newPhoto->isValid()) {
+                // Mengambil nama pengguna untuk digunakan dalam nama foto
+                $username = $user->name;
+
+                if ($user->photo) {
+                    // Hapus foto lama jika ada
+                    $oldPhotoPath = public_path($user->photo);
+                    if (File::exists($oldPhotoPath)) {
+                        File::delete($oldPhotoPath);
+                    }
+                }
+
+                // Simpan foto baru dengan nama pengguna dan tanggal sebagai nama file
+                $extension = $newPhoto->getClientOriginalExtension();
+                $currentDate = date('YmdHis');
+                $fileName = $username . '_' . $currentDate . '.' . $extension;
+
+                // Simpan foto ke dalam direktori public/assets/img/pp
+                $newPhoto->move(public_path('assets/img/pp'), $fileName);
+
+                // Simpan path foto ke dalam database
+                $user->photo = 'assets/img/pp/' . $fileName;
+
+                // Simpan perubahan pada objek pengguna
+                $user->save();
+
+                return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
+            } else {
+                return "Foto tidak valid. Silakan unggah foto yang valid";
+            }
         }
-    
-        $user->save();
-    
-        return redirect()->back()->with('success', 'User updated successfully');
+
+        return "error', 'Tidak ada file foto yang diunggah";
     }
+
+
+
 
     /**
      * Destroy an authenticated session.

@@ -35,6 +35,7 @@ Route::middleware('authClient')->group(function () {
     Route::get('/expenses', [ClientExpensesController::class, 'index'])->name('expenses');
     Route::resource('depositories', DepositoryController::class);
     Route::resource('histories', HistoryController::class);
+    Route::put('/users/photo/{id}', [AuthAdmin::class, 'updatephoto'])->name('users.update.photo');
 });
 
 require __DIR__.'/auth.php';
