@@ -6,6 +6,7 @@ use App\Http\Controllers\Client\DashboardController as ClientDashboardController
 use App\Http\Controllers\Client\EarningController as ClientEarningController;
 use App\Http\Controllers\Client\ExpensesController as ClientExpensesController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController as AuthAdmin;
 use App\Http\Controllers\Client\HistoryController;
 use App\Http\Controllers\Client\DepositoryController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('authAdmin')->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.admin');
+    Route::post('/admin/user/store', [AuthAdmin::class, 'storeByAdmin'])->name('admin.users.store');
+    Route::post('/admin/profile/destroy/{id}', [AuthAdmin::class, 'deleteByAdmin'])->name('admin.profile.destroy');
 });
 Route::middleware('authClient')->group(function () {
     Route::get('/dashboard', [ClientDashboardController::class, 'index'])->name('dashboard');

@@ -4,8 +4,24 @@
     <div class="container container-dashboard p-lg-5">
         <div class="d-flex justify-content-between align-items-center mt-4">
             <h3 class="mb-0 text-gradient">Admin</h3>
-            <a href="#" class="btn btn-secondary">Add New User</a>
+            <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#addUserModal">Add New User</a>
         </div>
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                {{ session('danger') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="table-responsive mt-3">
             <table class="table table-hover table-bordered">
                 <thead class="thead-primary">
@@ -19,14 +35,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php
-                        $users = [
-                            ['name' => 'John Doe', 'email' => 'john@example.com', 'role' => 'Admin', 'created_at' => '2023-01-15'],
-                            ['name' => 'Jane Smith', 'email' => 'jane@example.com', 'role' => 'User', 'created_at' => '2023-02-20'],
-                            ['name' => 'Mike Johnson', 'email' => 'mike@example.com', 'role' => 'Editor', 'created_at' => '2023-03-10'],
-                            ['name' => 'Emily Davis', 'email' => 'emily@example.com', 'role' => 'User', 'created_at' => '2023-04-05']
-                        ];
-                    @endphp
 
                     @foreach ($users as $index => $user)
                         <tr>
@@ -37,16 +45,73 @@
                             <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') }}</td>
                             <td>
                                 <a href="#" class="btn btn-secondary btn-sm">Edit</a>
-                                <form action="#" method="POST" style="display: inline-block;">
+                                <form action="{{ route('admin.profile.destroy', $user['id']) }}" method="POST" style="display: inline-block;">
                                     @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this profile?')">Delete</button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- Add New User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('admin.users.store') }}" method="POST">
+                    @csrf
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">Nama:</label>
+                            <input id="name" type="text" class="form-control" name="name" required autofocus autocomplete="name">
+                            @error('name')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input id="email" type="email" class="form-control" name="email" required autocomplete="email">
+                            @error('email')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input id="password" type="password" class="form-control" name="password" minlength="8" required autocomplete="new-password">
+                            @error('password')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm_password">Confirm Password:</label>
+                            <input id="confirm_password" type="password" class="form-control" name="password_confirmation" minlength="8" required autocomplete="new-password">
+                            @error('confirm_password')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add User</button>
+                    </div>
+                </form>
+
+
+            </div>
         </div>
     </div>
 @endsection

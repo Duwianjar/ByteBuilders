@@ -52,7 +52,7 @@ class DepositoryController extends Controller
      */
     public function show(string $id)
     {
-        
+
         $depositoried = Depository::where('id_user', Auth::user()->id)->get();
         $depository = Depository::where('id', $id)->first();
         $history = History::where('id_depository', $id)->where('id_user', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(5);
