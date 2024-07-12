@@ -26,6 +26,7 @@ Route::middleware('authAdmin')->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.admin');
     Route::post('/admin/user/store', [AuthAdmin::class, 'storeByAdmin'])->name('admin.users.store');
     Route::post('/admin/profile/destroy/{id}', [AuthAdmin::class, 'deleteByAdmin'])->name('admin.profile.destroy');
+    Route::put('/admin/users/{id}', [AuthAdmin::class, 'updateByAdmin'])->name('admin.users.update');
 });
 Route::middleware('authClient')->group(function () {
     Route::get('/dashboard', [ClientDashboardController::class, 'index'])->name('dashboard');

@@ -66,6 +66,28 @@ class AuthenticatedSessionController extends Controller
             return redirect()->back()->with('error', "Failed to delete user.");
         }
     }
+    
+    public function updateByAdmin(Request $request, string $id)
+    {
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+        ]);
+    
+        $user = User::findOrFail($id);
+    
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
+    
+        if ($request->filled('password')) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+    
+        $user->save();
+    
+        return redirect()->back()->with('success', 'User updated successfully');
+    }
 
     /**
      * Destroy an authenticated session.
