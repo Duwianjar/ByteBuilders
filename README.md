@@ -7,30 +7,19 @@ Ini adalah proyek MoneyWise, sebuah aplikasi web yang dibangun menggunakan frame
 Berikut langkah-langkah untuk menjalankan aplikasi MoneyWise di lingkungan pengembangan Anda:
 
 1. **Clone Repository**:
-bash
-   git clone https://github.com/username/repository.git
+git clone https://github.com/username/repository.git
 
 
 
 2. **Masuk ke Directori Proyek:**
-bash
-
 cd repository
 
-3. **Instal Dependencies:**
+3. **composer install JIKA BELUM**
 
-bash
+4. **Tidak perlu Setup env dan database karena menggunakan sql lite di kodingannya**
 
-4. **composer install**
-
-5. **Tidak perlu Setup env dan database karena menggunakan sql lite di kodingannya**
-
-
-6. **Jalankan Server:**
-
-bash
-
+5. **Jalankan Server:**
 php artisan serve
 
-7. **Akses Aplikasi:**
+6. **Akses Aplikasi:**
 Buka browser dan kunjungi URL yang ditampilkan setelah menjalankan perintah php artisan serve. Biasanya URL defaultnya adalah http://localhost:8000.
